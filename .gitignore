@@ -1,0 +1,66 @@
+# Ignore compiled output and build directories
+target/
+bin/
+build/
+
+# Ignore IDE and editor files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Ignore system and temporary files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Ignore log files
+*.log
+logs/
+
+# Ignore package manager directories
+node_modules/
+vendor/
+
+# Ignore dependencies and lock files
+*.jar
+*.war
+*.ear
+*.class
+*.dll
+*.exe
+*.obj
+*.o
+*.a
+*.so
+*.lib
+*.dylib
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+yarn.lock
+package-lock.json
+yarn.lock
+
+# Ignore generated files
+*.min.css
+*.min.js
+dist/
+
+# Ignore sensitive or environment-specific information
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore backup files
+*.bak
+*.backup
+
+# Ignore documentation and generated API files
+docs/
+api-docs/
