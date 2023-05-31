@@ -39,13 +39,32 @@ public class LeaderElection implements Watcher {
 
     // Method to volunteer for leadership
     public void volunteerForLeadership() throws Exception {
-        // Define the znode name prefix
+        // 1. Define the znode name prefix
+        // "znodeFullPath" : This is the full path to the znode to be created. Znode paths in ZooKeeper are similar
+        // to file paths in a file system, but they always must start with a slash ("/")
         String znodeFullPath = ELECTION_NAMESPACE + "/c_";
 
-        // Create an ephemeral sequential znode
-        String createdZnodeName = zooKeeper.create(znodeFullPath, new byte[]{}, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+        // 2. Create an ephemeral sequential znode
 
-        // Store the znode name of the created node (without the namespace prefix)
+        // "new byte[] {}" : This is the initial data to be stored in the znode. ZooKeeper can store any data that can be
+        // represented as a byte array. In this case, an empty byte array is being stored,
+        // which means the znode is being created with no data.
+
+        // "ZooDefs.Ids.OPEN_ACL_UNSAFE" : This is the Access Control List (ACL) for the znode.
+        // ZooKeeper uses ACLs to control who can do what to a znode. The OPEN_ACL_UNSAFE ACL allows any client
+        // to do anything. It gives every ZooKeeper client full permissions to read, write, and delete the znode.
+        // In a production setting, we would likely want to use a more restrictive ACL.
+
+        // "CreateMode.EPHEMERAL_SEQUENTIAL" : This is the creation mode for the znode. ZooKeeper has two types of
+        // znodes: persistent and ephemeral. Persistent znodes stick around until deleted by a client, while
+        // ephemeral znodes are automatically deleted when the client session that created them ends.
+        // The SEQUENTIAL part means ZooKeeper will automatically append a monotonically increasing counter to the end
+        // of the znode path. This is useful for ensuring unique znode names when multiple clients might be trying to
+        // create a znode with the same path.
+        String createdZnodeName = zooKeeper.create(znodeFullPath, new byte[]{}, ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL);
+
+        // 3. Store the znode name of the created node (without the namespace prefix)
         this.currentZnodeName = createdZnodeName.replace(ELECTION_NAMESPACE + "/", "");
     }
 
